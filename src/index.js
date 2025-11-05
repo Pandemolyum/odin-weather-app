@@ -1,33 +1,38 @@
 import "./style.css";
 
-const unit = "metric";
+let unit = "metric";
 
-// Implement toggle button functionality here
-const unitButton = document.querySelector("button");
-unitButton.addEventListener("click", () => {});
-
-const searchButton = document.querySelector("button.search");
-searchButton.addEventListener("click", () => {
-    submitSearchLocation(unit);
-});
-
+// Displays new weather data based on search value after pressing Enter
 const searchBar = document.querySelector("input.search");
 let lastSearch = "";
 searchBar.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && lastSearch !== searchBar.value) {
         lastSearch = searchBar.value;
-        submitSearchLocation(unit);
+        updateLocation(unit, searchBar.value);
     }
 });
 
-getGeolocationData(unit);
+// Displays new weather data based on search value after clicking the search button
+const searchButton = document.querySelector("button.search");
+searchButton.addEventListener("click", () => {
+    updateLocation(unit, searchBar.value);
+});
 
-// Updates the weather data based on the location in the search bar
-function submitSearchLocation(unit) {
-    const searchBar = document.querySelector("input");
-    const location = searchBar.value;
-    updateLocation(unit, location);
-}
+// Displays weather data of the currently displayed query on unit toggled
+const unitButton = document.querySelector("label.unit input");
+console.log("🚀 ~ unitButton:", unitButton);
+unitButton.addEventListener("change", () => {
+    console.log("change");
+    if (unitButton.checked) {
+        unit = "us";
+    } else {
+        unit = "metric";
+    }
+    console.log("🚀 ~ unit:", unit);
+    updateLocation(unit, document.getElementById("location").textContent);
+});
+
+getGeolocationData(unit);
 
 // Retrieves the current geolocation and updates it
 async function getGeolocationData(unit) {
