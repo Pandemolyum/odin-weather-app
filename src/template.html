@@ -8,10 +8,34 @@
 </head>
 
 <body>
-    <div class="header">
+    <header>
         <div class="search">
-            <input class="search type=" search">
+            <input class="search" type="search" placeholder:="Search...">
             <button class="search">Search</button>
+        </div>
+        <label class="unit">
+            <span class="left">°C</span>
+            <input type="checkbox">
+            <span class="slider round"></span>
+            <span class="right">°F</span>
+        </label>
+    </header>
+    <div class="content">
+        <h2 id="location"></h2>
+        <h3 id="conditions"></h3>
+        <div class="current">
+            <h1 id="temp"></h1>
+            <div><span>Windspeed: </span><span id="windspeed"></span></div>
+            <div><span>Wind Direction: </span><span id="winddir"></span></div>
+            <div><span>Humidity: </span><span id="humidity"></span></div>
+            <div><span>Feels Like: </span><span id="feelslike"></span></div>
+            <div><span>Pressure: </span><span id="pressure"></span></div>
+            <div><span>Rain: </span><span id="precip"></span></div>
+            <div><span>Sunrise: </span><span id="sunrise"></span></div>
+            <div><span>Risk of Rain: </span><span id="precipprob"></span></div>
+            <div><span>Sunset: </span><span id="sunset"></span></div>
+            <div><span>UV Index: </span><span id="uvindex"></span></div>
+            <div><span></span><span id="moonphase"></span></div>
         </div>
     </div>
 </body>
