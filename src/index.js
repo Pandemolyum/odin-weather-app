@@ -12,8 +12,10 @@ searchButton.addEventListener("click", () => {
 });
 
 const searchBar = document.querySelector("input.search");
+let lastSearch = "";
 searchBar.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && lastSearch !== searchBar.value) {
+        lastSearch = searchBar.value;
         submitSearchLocation(unit);
     }
 });
@@ -103,6 +105,7 @@ async function getData(query) {
         }
 
         const result = await response.json();
+        console.log("🚀 ~ getData ~ result:", result);
         return result;
     } catch (error) {
         console.error(error.message);
