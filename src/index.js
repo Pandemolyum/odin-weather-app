@@ -1,4 +1,8 @@
 import "./style.css";
+import clearSkyImg from "./images/clear-sky.jpg";
+import cloudySkyImg from "./images/cloudy-sky.jpg";
+import rainImg from "./images/rain.jpg";
+import snowImg from "./images/snow.jpg";
 
 let unit = "metric";
 
@@ -20,19 +24,27 @@ searchButton.addEventListener("click", () => {
 
 // Displays weather data of the currently displayed query on unit toggled
 const unitButton = document.querySelector("label.unit input");
-console.log("🚀 ~ unitButton:", unitButton);
 unitButton.addEventListener("change", () => {
-    console.log("change");
     if (unitButton.checked) {
         unit = "us";
     } else {
         unit = "metric";
     }
-    console.log("🚀 ~ unit:", unit);
     updateLocation(unit, document.getElementById("location").textContent);
 });
 
 getGeolocationData(unit);
+
+// Changes background based on weather conditions
+const observer = new MutationObserver(onConditionsTextContentChange);
+const config = {
+    characterData: false,
+    attributes: false,
+    childList: true,
+    subtree: false,
+};
+const conditions = document.getElementById("conditions");
+observer.observe(conditions, config);
 
 // Retrieves the current geolocation and updates it
 async function getGeolocationData(unit) {
@@ -222,5 +234,28 @@ function getMoonPhase(value) {
             return "Last Quarter 🌗";
         case value > 0.75 && value < 1:
             return "Waning Crescent 🌘";
+    }
+}
+
+function onConditionsTextContentChange(mutation) {
+    const description = mutation[0].target.textContent.toLowerCase();
+    const body = document.querySelector("body");
+    console.log("🚀 ~ onConditionsTextContentChange ~ body:", body);
+    console.log("🚀 ~ description:", description);
+    if (description.includes("snow")) {
+        body.style.backgroundImage = `url(${snowImg}`;
+    } else if (
+        description.includes("rain") ||
+        description.includes("drizzle") ||
+        description.includes("storm")
+    ) {
+        body.style.backgroundImage = `url(${rainImg}`;
+    } else if (
+        description.includes("overcast") ||
+        description.includes("cloud")
+    ) {
+        body.style.backgroundImage = `url(${cloudySkyImg}`;
+    } else {
+        body.style.backgroundImage = `url(${clearSkyImg}`;
     }
 }

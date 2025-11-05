@@ -2,6 +2,9 @@
 
 body {
     background-color: lightskyblue;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     width: fit-content;
     min-width: 500px;
     margin: 0 auto;
@@ -19,6 +22,9 @@ span.left,
 span.right {
     font-size: 1.5rem;
     font-weight: bold;
+    background-color: #0000007a;
+    border-radius: 1rem;
+    /* padding: 0.35rem; */
 }
 
 span.left {
