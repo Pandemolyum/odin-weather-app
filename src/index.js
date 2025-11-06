@@ -84,7 +84,7 @@ async function getLocation() {
     return new Promise((res, rej) => {
         navigator.geolocation.getCurrentPosition(res, rej, {
             enableHighAccuracy: true,
-            timeout: 5000,
+            timeout: 10000,
             maximumAge: 0,
         });
     });

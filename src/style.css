@@ -15,6 +15,7 @@ body {
 header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 2rem calc(1rem + 40px) 2rem 1rem;
 }
 
@@ -24,19 +25,12 @@ span.right {
     font-weight: bold;
     background-color: #0000007a;
     border-radius: 1rem;
-    /* padding: 0.35rem; */
+    padding: 0.1rem 0.5rem;
 }
 
 span.left {
     position: relative;
-    right: 40px;
-    bottom: 2px;
-}
-
-span.right {
-    position: relative;
-    left: 40px;
-    bottom: 2px;
+    right: 52px;
 }
 
 button,
@@ -55,9 +49,11 @@ button,
 /* #region Units Toggle */
 .unit {
     position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
     width: 60px;
     height: 34px;
+    gap: 16px;
 }
 
 .unit input {
