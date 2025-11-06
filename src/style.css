@@ -150,3 +150,22 @@ div.current > div > span:first-child {
     font-weight: 200;
 }
 /* #endregion Content */
+
+/* #region Footer */
+footer {
+    position: absolute;
+    background-color: #0000007a;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+a:link {
+    color: skyblue;
+}
+
+a:visited {
+    color: violet;
+}
+/* #endregion Footer */

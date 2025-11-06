@@ -3,6 +3,7 @@ import clearSkyImg from "./images/clear-sky.jpg";
 import cloudySkyImg from "./images/cloudy-sky.jpg";
 import rainImg from "./images/rain.jpg";
 import snowImg from "./images/snow.jpg";
+import imgRefs from "./ref/img-refs.json" with { type: "json" };
 
 let unit = "metric";
 
@@ -122,7 +123,6 @@ async function getData(query) {
         }
 
         const result = await response.json();
-        console.log("🚀 ~ getData ~ result:", result);
         return result;
     } catch (error) {
         console.error(error.message);
@@ -163,7 +163,7 @@ function setTextContent(parameter, data, unit) {
     let value = data["currentConditions"][parameter];
     if (parameter === "moonphase") {
         value = getMoonPhase(value);
-    }
+    } // Do this for wind direction too
 
     elem.textContent = value + getUnit(parameter, unit);
 }
@@ -237,25 +237,40 @@ function getMoonPhase(value) {
     }
 }
 
+// Updates the background picture and picture credits when the conditions'
+// element textContent updates
 function onConditionsTextContentChange(mutation) {
     const description = mutation[0].target.textContent.toLowerCase();
-    const body = document.querySelector("body");
-    console.log("🚀 ~ onConditionsTextContentChange ~ body:", body);
-    console.log("🚀 ~ description:", description);
+    let url;
+    let img;
+
     if (description.includes("snow")) {
-        body.style.backgroundImage = `url(${snowImg}`;
+        url = snowImg;
+        img = "snow.jpg";
     } else if (
         description.includes("rain") ||
         description.includes("drizzle") ||
         description.includes("storm")
     ) {
-        body.style.backgroundImage = `url(${rainImg}`;
+        url = rainImg;
+        img = "rain.jpg";
     } else if (
         description.includes("overcast") ||
         description.includes("cloud")
     ) {
-        body.style.backgroundImage = `url(${cloudySkyImg}`;
+        url = cloudySkyImg;
+        img = "cloudy-sky.jpg";
     } else {
-        body.style.backgroundImage = `url(${clearSkyImg}`;
+        url = clearSkyImg;
+        img = "clear-sky.jpg";
     }
+
+    const body = document.querySelector("body");
+    const credits = document.getElementById("credits");
+    const creditsLink = document.getElementById("credits-link");
+
+    body.style.backgroundImage = `url(${url}`;
+    credits.textContent = "Background picture by " + imgRefs[img].artist + " on ";
+    creditsLink.textContent = "Unsplash";
+    creditsLink.href = imgRefs[img].link;
 }
