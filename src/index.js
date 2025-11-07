@@ -3,6 +3,7 @@ import clearSkyImg from "./images/clear-sky.jpg";
 import cloudySkyImg from "./images/cloudy-sky.jpg";
 import rainImg from "./images/rain.jpg";
 import snowImg from "./images/snow.jpg";
+// prettier-ignore
 import imgRefs from "./ref/img-refs.json" with { type: "json" };
 
 let unit = "metric";
@@ -163,7 +164,9 @@ function setTextContent(parameter, data, unit) {
     let value = data["currentConditions"][parameter];
     if (parameter === "moonphase") {
         value = getMoonPhase(value);
-    } // Do this for wind direction too
+    } else if (parameter === "winddir") {
+        value = getWindDirection(value);
+    }
 
     elem.textContent = value + getUnit(parameter, unit);
 }
@@ -235,6 +238,16 @@ function getMoonPhase(value) {
         case value > 0.75 && value < 1:
             return "Waning Crescent 🌘";
     }
+}
+
+// Returns wind direction based on documentation found below:
+// https://www.visualcrossing.com/resources/documentation/weather-data/weather-data-documentation/
+function getWindDirection(value) {
+    const dirIndex = Math.floor((value + 11.25)/22.5);
+    const dirArr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+    console.log("🚀 ~ getWindDirection ~ value:", value);
+    console.log("🚀 ~ getWindDirection ~ dirIndex:", dirIndex);
+    return dirArr[dirIndex];
 }
 
 // Updates the background picture and picture credits when the conditions'
