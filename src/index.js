@@ -9,6 +9,7 @@ import rainSvg from "./images/weather-rain.svg";
 import snowySvg from "./images/weather-snowy.svg";
 import searchSvg from "./images/magnify.svg";
 import locationSvg from "./images/map-marker-radius.svg";
+import loadingGif from "./images/loading.gif";
 import imgRefs from "./ref/img-refs.json" with { type:"json"};
 
 let unit = "metric";
@@ -68,6 +69,7 @@ observer.observe(conditions, config);
 
 // Retrieves the current geolocation and updates it
 async function getGeolocationData(unit) {
+    showLoadingIcons()
     try {
         const location = await getLocation();
         const coords = getPosition(location);
@@ -75,6 +77,7 @@ async function getGeolocationData(unit) {
     } catch (error) {
         showError(error);
     }
+    hideLoadingIcons();
 }
 
 // Builds a query for new weather data and calls getData which queries
@@ -89,10 +92,12 @@ async function updateLocation(unit, location) {
         "&key=3VBHDWDMBCQABZH2U8VU3LS9Z&contentType=json";
 
     // Get and display query data
+    showLoadingIcons()
     const result = await getData(weatherQuery);
     if (result) {
         displayWeatherData(location, result, unit);
     }
+    hideLoadingIcons();
 }
 
 // Returns the current geolocation
@@ -321,4 +326,38 @@ function updateIcons() {
 
     const locationIcon = document.querySelector("img.location-search")
     locationIcon.src = locationSvg;
+
+    const searchIconLoad = document.querySelector("img.loading")
+    searchIconLoad.src = loadingGif;
+
+    const locationIconLoad = document.querySelector("img.loading-search")
+    locationIconLoad.src = loadingGif;
+}
+
+function hideLoadingIcons() {
+    const searchIcon = document.querySelector("img.search")
+    searchIcon.style.display = "inline-block";
+
+    const locationIcon = document.querySelector("img.location-search")
+    locationIcon.style.display = "inline-block";
+
+    const searchIconLoad = document.querySelector("img.loading")
+    searchIconLoad.style.display = "none";
+
+    const locationIconLoad = document.querySelector("img.loading-search")
+    locationIconLoad.style.display = "none";
+}
+
+function showLoadingIcons() {
+    const searchIcon = document.querySelector("img.search")
+    searchIcon.style.display = "none";
+
+    const locationIcon = document.querySelector("img.location-search")
+    locationIcon.style.display = "none";
+
+    const searchIconLoad = document.querySelector("img.loading")
+    searchIconLoad.style.display = "inline-block";
+
+    const locationIconLoad = document.querySelector("img.loading-search")
+    locationIconLoad.style.display = "inline-block";
 }

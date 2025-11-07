@@ -59,6 +59,13 @@ img.search {
     padding: 0.5rem;
 }
 
+img.loading,
+img.loading-search {
+    border-radius: 50%;
+    padding: 0.5rem;
+    display: none;
+}
+
 /* #region Units Toggle */
 .unit {
     position: relative;
