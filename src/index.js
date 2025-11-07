@@ -1,4 +1,7 @@
+// Import CSS
 import "./style.css";
+
+// Import images
 import clearSkyImg from "./images/clear-sky.jpg";
 import cloudySkyImg from "./images/cloudy-sky.jpg";
 import rainImg from "./images/rain.jpg";
@@ -11,6 +14,10 @@ import searchSvg from "./images/magnify.svg";
 import locationSvg from "./images/map-marker-radius.svg";
 import loadingGif from "./images/loading.gif";
 import imgRefs from "./ref/img-refs.json" with { type:"json"};
+
+// Import .js
+import { quickBuildImgCarousel } from "./image-carousel";
+import { test } from "./hourly-daily.js";
 
 let unit = "metric";
 
@@ -67,6 +74,8 @@ const config = {
 const conditions = document.getElementById("conditions");
 observer.observe(conditions, config);
 
+
+// ========== FUNCTIONS ==========
 // Retrieves the current geolocation and updates it
 async function getGeolocationData(unit) {
     showLoadingIcons()
@@ -95,7 +104,9 @@ async function updateLocation(unit, location) {
     showLoadingIcons()
     const result = await getData(weatherQuery);
     if (result) {
-        displayWeatherData(location, result, unit);
+        displayCurrentWeatherData(location, result, unit);
+        console.log(result);
+        console.log(test(0, result, "datetime"));
     }
     hideLoadingIcons();
 }
@@ -154,7 +165,7 @@ async function getData(query) {
 }
 
 // Displays weather data based on a JSON result and specific parameters
-function displayWeatherData(location, data, unit) {
+function displayCurrentWeatherData(location, data, unit) {
     const parameters = [
         "conditions",
         "temp",
@@ -178,6 +189,9 @@ function displayWeatherData(location, data, unit) {
         setTextContent(param, data, unit);
     }
 }
+
+// Display data on an hourly basis
+
 
 // Sets the textContent property of the element with a specified id
 // based on queried JSON data

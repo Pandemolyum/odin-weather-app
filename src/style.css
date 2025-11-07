@@ -1,4 +1,5 @@
 @import "./t-normalize.css";
+@import "./image-carousel.css";
 
 body {
     background-color: lightskyblue;

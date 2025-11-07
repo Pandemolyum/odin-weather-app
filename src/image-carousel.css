@@ -1,0 +1,76 @@
+/* To be used in conjunction with the image-carousel.js library */
+div.carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+}
+
+div.carousel-content {
+    --carousel-img-width: 80vh;
+    --carousel-img-gap: 10rem;
+    --carousel-img-ratio: calc(4 / 3);
+    --carousel-btn-width: calc(var(--carousel-img-width) / 10);
+    display: flex;
+    align-items: center;
+}
+
+div div.carousel {
+    width: var(--carousel-img-width);
+    display: inline-block;
+    overflow: hidden;
+}
+
+div.wide-container {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--carousel-img-gap);
+    position: relative;
+    right: 0px; /* requires specification for first slide animation */
+    transition: 0.5s;
+}
+
+img.carousel {
+    width: var(--carousel-img-width);
+    min-width: 100%;
+}
+
+img.carousel-btn {
+    cursor: pointer;
+    width: var(--carousel-btn-width);
+    padding: calc(
+            (
+                    (var(--carousel-img-width) / var(--carousel-img-ratio)) -
+                        (var(--carousel-img-width) / 10)
+                ) / 2
+        )
+        0;
+
+    &&:hover {
+        background-color: rgba(128, 128, 128, 0.2);
+    }
+}
+
+div.carousel-nav {
+    display: flex;
+    gap: 5rem;
+}
+
+span.nav-dot {
+    height: 4rem;
+    width: 4rem;
+    background-color: #bebebec4;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &&:hover {
+        background-color: rgb(129, 129, 129);
+    }
+}
+
+.nav-dot.selected {
+    background-color: rgb(129, 129, 129);
+    transform: scale(1.5);
+}
