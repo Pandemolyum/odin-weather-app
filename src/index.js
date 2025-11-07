@@ -3,8 +3,11 @@ import clearSkyImg from "./images/clear-sky.jpg";
 import cloudySkyImg from "./images/cloudy-sky.jpg";
 import rainImg from "./images/rain.jpg";
 import snowImg from "./images/snow.jpg";
-// prettier-ignore
-import imgRefs from "./ref/img-refs.json" with { type: "json" };
+import sunnySvg from "./images/weather-sunny.svg";
+import cloudySvg from "./images/weather-cloudy.svg";
+import rainSvg from "./images/weather-rain.svg";
+import snowySvg from "./images/weather-snowy.svg";
+import imgRefs from "./ref/img-refs.json" with { type:"json"};
 
 let unit = "metric";
 
@@ -245,8 +248,6 @@ function getMoonPhase(value) {
 function getWindDirection(value) {
     const dirIndex = Math.floor((value + 11.25)/22.5);
     const dirArr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
-    console.log("🚀 ~ getWindDirection ~ value:", value);
-    console.log("🚀 ~ getWindDirection ~ dirIndex:", dirIndex);
     return dirArr[dirIndex];
 }
 
@@ -256,10 +257,12 @@ function onConditionsTextContentChange(mutation) {
     const description = mutation[0].target.textContent.toLowerCase();
     let url;
     let img;
+    let svg;
 
     if (description.includes("snow")) {
         url = snowImg;
         img = "snow.jpg";
+        svg = snowySvg;
     } else if (
         description.includes("rain") ||
         description.includes("drizzle") ||
@@ -267,17 +270,21 @@ function onConditionsTextContentChange(mutation) {
     ) {
         url = rainImg;
         img = "rain.jpg";
+        svg = rainSvg;
     } else if (
         description.includes("overcast") ||
         description.includes("cloud")
     ) {
         url = cloudySkyImg;
         img = "cloudy-sky.jpg";
+        svg = cloudySvg;
     } else {
         url = clearSkyImg;
         img = "clear-sky.jpg";
+        svg = sunnySvg;
     }
 
+    // Update background picture and its credits
     const body = document.querySelector("body");
     const credits = document.getElementById("credits");
     const creditsLink = document.getElementById("credits-link");
@@ -286,4 +293,9 @@ function onConditionsTextContentChange(mutation) {
     credits.textContent = "Background picture by " + imgRefs[img].artist + " on ";
     creditsLink.textContent = "Unsplash";
     creditsLink.href = imgRefs[img].link;
+
+    // Update svg icon
+    const svgElem = document.getElementById("conditions-svg");
+    svgElem.src = svg;
 }
+
