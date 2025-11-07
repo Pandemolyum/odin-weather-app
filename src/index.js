@@ -310,7 +310,7 @@ function onConditionsTextContentChange(mutation) {
     const creditsLink = document.getElementById("credits-link");
 
     body.style.backgroundImage = `url(${url}`;
-    credits.textContent = "Background picture by " + imgRefs[img].artist + " on ";
+    credits.textContent = "Background by " + imgRefs[img].artist + " on ";
     creditsLink.textContent = "Unsplash";
     creditsLink.href = imgRefs[img].link;
 

@@ -183,9 +183,10 @@ footer {
     position: absolute;
     background-color: #0000007a;
     left: 0;
-    bottom: 0;
+    vertical-align: bottom;
     width: 100%;
     text-align: center;
+    margin-top: 3em;
 }
 
 a:link {
