@@ -7,9 +7,13 @@ import sunnySvg from "./images/weather-sunny.svg";
 import cloudySvg from "./images/weather-cloudy.svg";
 import rainSvg from "./images/weather-rain.svg";
 import snowySvg from "./images/weather-snowy.svg";
+import searchSvg from "./images/magnify.svg";
+import locationSvg from "./images/map-marker-radius.svg";
 import imgRefs from "./ref/img-refs.json" with { type:"json"};
 
 let unit = "metric";
+
+updateIcons();
 
 // Displays new weather data based on search value after pressing Enter
 const searchBar = document.querySelector("input.search");
@@ -22,7 +26,7 @@ searchBar.addEventListener("keydown", (e) => {
 });
 
 // Displays new weather data based on search value after clicking the search button
-const searchButton = document.querySelector("button.search");
+const searchButton = document.querySelector("img.search");
 searchButton.addEventListener("click", () => {
     updateLocation(unit, searchBar.value);
 });
@@ -299,3 +303,8 @@ function onConditionsTextContentChange(mutation) {
     svgElem.src = svg;
 }
 
+// Updates icon sources
+function updateIcons() {
+    const searchIcon = document.querySelector("img.search")
+    searchIcon.src = searchSvg;
+}

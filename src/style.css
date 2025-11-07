@@ -33,17 +33,26 @@ span.left {
     right: 52px;
 }
 
-button,
+.search img,
 .search input {
     background-color: #0000007a;
     border: none;
     border-radius: 1rem;
     padding: 0.5rem 1rem;
     color: white;
+    vertical-align: middle;
+    height: 2.5em;
 
     &&:hover {
         background-color: #000000ad;
     }
+}
+
+img.search {
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0.5rem;
 }
 
 /* #region Units Toggle */
