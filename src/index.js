@@ -42,6 +42,17 @@ unitButton.addEventListener("change", () => {
     updateLocation(unit, document.getElementById("location").textContent);
 });
 
+// Returns results for the cvurrent location
+const locationButton = document.querySelector("img.location-search");
+locationButton.addEventListener("click", () => {
+    if (unitButton.checked) {
+        unit = "us";
+    } else {
+        unit = "metric";
+    }
+    getGeolocationData(unit);
+});
+
 getGeolocationData(unit);
 
 // Changes background based on weather conditions
@@ -307,4 +318,7 @@ function onConditionsTextContentChange(mutation) {
 function updateIcons() {
     const searchIcon = document.querySelector("img.search")
     searchIcon.src = searchSvg;
+
+    const locationIcon = document.querySelector("img.location-search")
+    locationIcon.src = locationSvg;
 }

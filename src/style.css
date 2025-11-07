@@ -6,7 +6,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     width: fit-content;
-    min-width: 500px;
+    min-width: 550px;
     margin: 0 auto;
     color: white;
 }
@@ -30,11 +30,16 @@ span.right {
 
 span.left {
     position: relative;
-    right: 52px;
+    right: 44px;
+}
+span.right {
+    position: relative;
+    right: 8px;
 }
 
 .search img,
 .search input {
+    display: inline-block;
     background-color: #0000007a;
     border: none;
     border-radius: 1rem;
@@ -49,7 +54,6 @@ span.left {
 }
 
 img.search {
-    display: inline-block;
     cursor: pointer;
     border-radius: 50%;
     padding: 0.5rem;
