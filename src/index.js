@@ -113,7 +113,6 @@ async function updateLocation(unit, location) {
     const result = await getData(weatherQuery);
     if (result) {
         displayCurrentWeatherData(location, result, unit);
-        console.log(result);
         displayHourlyWeatherData(result, unit);
         displayDailyWeatherData(result, unit);
     }

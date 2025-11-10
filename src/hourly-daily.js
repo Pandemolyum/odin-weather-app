@@ -145,7 +145,6 @@ function getWeatherIcon(preciptype, precipprob, cloudcover) {
         return sunnySvg;
     }
     preciptype = preciptype.join(" ");
-    console.log("🚀 ~ getWeatherIcon ~ preciptype:", preciptype);
     if (preciptype.includes("snow") && precipprob >= 35) {
         return snowySvg;
     } else if (preciptype.includes("rain") && precipprob >= 35) {
