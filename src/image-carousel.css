@@ -7,23 +7,23 @@ div.carousel-container {
 }
 
 div.carousel-content {
-    --carousel-img-width: 10vh;
-    --carousel-img-gap: 3rem;
+    --carousel-img-width: 5em;
+    --carousel-img-gap: 3em;
     --carousel-img-ratio: calc(1 / 1);
     --carousel-btn-width: calc(var(--carousel-img-width) / 4);
     display: flex;
     align-items: center;
     gap: 1em;
-    width: 80%;
 }
 
 div div.carousel {
     width: calc(
-        (var(--carousel-img-width) + var(--carousel-img-gap)) * 5 -
-            var(--carousel-img-gap)
+        (var(--carousel-img-width) + var(--carousel-img-gap)) * 4 -
+            var(--carousel-img-gap) * 2
     );
     display: inline-block;
     overflow: hidden;
+    padding: 0.5rem;
 }
 
 div.wide-container {
@@ -57,9 +57,9 @@ img.carousel-btn {
     width: var(--carousel-btn-width);
     padding: calc(
             (
-                    (var(--carousel-img-width) / var(--carousel-img-ratio)) -
-                        (var(--carousel-img-width) / 10)
-                ) / 2
+                (var(--carousel-img-width) / var(--carousel-img-ratio)) -
+                    (var(--carousel-img-width) / 4)
+            )
         )
         0;
 

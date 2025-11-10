@@ -57,13 +57,7 @@ function getDailyResult(iday, dataset, parameter) {
 }
 
 function displayHourlyWeatherData(dataset, unit) {
-    const parameters = [
-        "datetime",
-        "temp",
-        "feelslike",
-        "precip",
-        "precipprob",
-    ];
+    const parameters = ["datetime", "temp", "precip", "precipprob"];
     const HOURS_DISPLAYED = 24;
 
     // Get weather icon to display in carousel
