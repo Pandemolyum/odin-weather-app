@@ -13,15 +13,22 @@ import snowySvg from "./images/weather-snowy.svg";
 import searchSvg from "./images/magnify.svg";
 import locationSvg from "./images/map-marker-radius.svg";
 import loadingGif from "./images/loading.gif";
+
+// Import reference documentation
 import imgRefs from "./ref/img-refs.json" with { type:"json"};
 
 // Import .js
-import { quickBuildImgCarousel } from "./image-carousel";
-import { test } from "./hourly-daily.js";
+import { displayHourlyWeatherData, displayDailyWeatherData } from "./hourly-daily.js";
 
-let unit = "metric";
 
-updateIcons();
+// ========== MAIN ==========
+let unit = "metric"; // Set default unit
+updateIcons(); // Update search icons
+
+// Store hourly data
+// Get images based on data (imgSrcArr) for the carousel
+// quickBuildImgCarousel(contentDiv, imgSrcArr, leftArrow, rightArrow) // Build hourly image carousel
+// do roughly the same thing for daily data
 
 // Displays new weather data based on search value after pressing Enter
 const searchBar = document.querySelector("input.search");
@@ -50,7 +57,7 @@ unitButton.addEventListener("change", () => {
     updateLocation(unit, document.getElementById("location").textContent);
 });
 
-// Returns results for the cvurrent location
+// Returns results for the current location
 const locationButton = document.querySelector("img.location-search");
 locationButton.addEventListener("click", () => {
     if (unitButton.checked) {
@@ -73,6 +80,7 @@ const config = {
 };
 const conditions = document.getElementById("conditions");
 observer.observe(conditions, config);
+
 
 
 // ========== FUNCTIONS ==========
@@ -106,7 +114,8 @@ async function updateLocation(unit, location) {
     if (result) {
         displayCurrentWeatherData(location, result, unit);
         console.log(result);
-        console.log(test(0, result, "datetime"));
+        displayHourlyWeatherData(result, unit);
+        displayDailyWeatherData(result, unit);
     }
     hideLoadingIcons();
 }
@@ -241,7 +250,7 @@ function getUnit(parameter, unit) {
             case "humidity":
                 return "%";
             case "precip":
-                return " inches";
+                return " in";
             case "precipprob":
                 return "%";
             case "windspeed":
@@ -375,3 +384,5 @@ function showLoadingIcons() {
     const locationIconLoad = document.querySelector("img.loading-search")
     locationIconLoad.style.display = "inline-block";
 }
+
+export { getUnit };

@@ -1,7 +1,15 @@
+// Import functions
+import { quickBuildImgCarousel } from "./image-carousel";
+import { getUnit } from "./index.js";
+import { format } from "date-fns";
+
+// Import images
 import sunnySvg from "./images/weather-sunny.svg";
 import cloudySvg from "./images/weather-cloudy.svg";
 import rainSvg from "./images/weather-rain.svg";
 import snowySvg from "./images/weather-snowy.svg";
+import leftArrow from "./images/left-arrow.svg";
+import rightArrow from "./images/right-arrow.svg";
 
 // Returns current hour as an integer from 0 to 23
 function getSystemHour() {
@@ -48,8 +56,7 @@ function getDailyResult(iday, dataset, parameter) {
     return dataset.days[iday][parameter];
 }
 
-function displayHourlyResults() {
-    const hourlyDiv = document.querySelector("div.hourly");
+function displayHourlyWeatherData(dataset, unit) {
     const parameters = [
         "datetime",
         "temp",
@@ -57,37 +64,107 @@ function displayHourlyResults() {
         "precip",
         "precipprob",
     ];
+    const HOURS_DISPLAYED = 24;
+
+    // Get weather icon to display in carousel
+    const iconArr = [];
+    for (let i = 0; i < HOURS_DISPLAYED; i++) {
+        const preciptype = getHourlyResult(i, dataset, "preciptype");
+        const precipprob = getHourlyResult(i, dataset, "precipprob");
+        const cloudcover = getHourlyResult(i, dataset, "cloudcover");
+        iconArr.push(getWeatherIcon(preciptype, precipprob, cloudcover));
+    }
+
+    // Create carousel with weather icon
+    const hourlyDiv = document.querySelector("div.hourly");
+    const hourlyHeader = document.createElement("h3");
+    hourlyHeader.textContent = "24-Hour Forecast";
+    hourlyDiv.replaceChildren(hourlyHeader);
+    quickBuildImgCarousel(hourlyDiv, iconArr, leftArrow, rightArrow);
+
+    // Get other data to display in carousel
+    const hdataChild = hourlyDiv.querySelector("div.wide-container").children;
+    for (let i = 0; i < HOURS_DISPLAYED; i++) {
+        // Display hour
+        const hourP = document.createElement("p");
+        let hour = getHourlyResult(i, dataset, parameters[0]);
+        hour = hour.slice(0, 2);
+        hourP.textContent = hour;
+        hdataChild[i].insertBefore(hourP, hdataChild[i].children[0]);
+
+        // Display other parameters
+        for (let j = 1; j < parameters.length; j++) {
+            const value = getHourlyResult(i, dataset, parameters[j]);
+            const newP = document.createElement("p");
+            newP.textContent =
+                Math.round(value * 10) / 10 + getUnit(parameters[j], unit);
+            hdataChild[i].appendChild(newP);
+        }
+    }
 }
 
-function displayDailyResults() {
+function displayDailyWeatherData(dataset, unit) {
+    const parameters = ["datetime", "temp", "precip", "precipprob"];
+    const DAYS_DISPLAYED = 14;
+
+    // Get weather icon to display in carousel
+    const iconArr = [];
+    for (let i = 0; i < DAYS_DISPLAYED; i++) {
+        const preciptype = getDailyResult(i, dataset, "preciptype");
+        const precipprob = getDailyResult(i, dataset, "precipprob");
+        const cloudcover = getDailyResult(i, dataset, "cloudcover");
+        iconArr.push(getWeatherIcon(preciptype, precipprob, cloudcover));
+    }
+
+    // Create carousel with weather icon
     const dailyDiv = document.querySelector("div.daily");
-    const parameters = [
-        "datetime",
-        "tempmax",
-        "tempmin",
-        "precip",
-        "precipprob",
-    ];
+    const dailyHeader = document.createElement("h3");
+    dailyHeader.textContent = "14-Day Forecast";
+    dailyDiv.replaceChildren(dailyHeader);
+    quickBuildImgCarousel(dailyDiv, iconArr, leftArrow, rightArrow);
+
+    // Get other data to display in carousel
+    const hdataChild = dailyDiv.querySelector("div.wide-container").children;
+    for (let i = 0; i < DAYS_DISPLAYED; i++) {
+        // Display day
+        const dayP = document.createElement("p");
+        let day = getDailyResult(i, dataset, parameters[0]);
+        day = day.replaceAll("-", "/");
+        dayP.textContent = format(day, "EEE d");
+        hdataChild[i].insertBefore(dayP, hdataChild[i].children[0]);
+
+        // Display other parameters
+        for (let j = 1; j < parameters.length; j++) {
+            const value = getDailyResult(i, dataset, parameters[j]);
+            const newP = document.createElement("p");
+            newP.textContent =
+                Math.round(value * 10) / 10 + getUnit(parameters[j], unit);
+            hdataChild[i].appendChild(newP);
+        }
+    }
 }
 
 function getWeatherIcon(preciptype, precipprob, cloudcover) {
-    let svg;
-
-    if (preciptype.contains("snow") && precipprob >= 35) {
-        svg = snowySvg;
-    } else if (preciptype.contains("rain") && precipprob >= 35) {
-        svg = rainSvg;
-    } else if (cloudcover > 10) {
-        svg = cloudySvg;
-    } else {
-        svg = sunnySvg;
+    if (preciptype === null && cloudcover > 10) {
+        return cloudySvg;
+    } else if (preciptype === null) {
+        return sunnySvg;
     }
-
-    return svg;
+    preciptype = preciptype.join(" ");
+    console.log("🚀 ~ getWeatherIcon ~ preciptype:", preciptype);
+    if (preciptype.includes("snow") && precipprob >= 35) {
+        return snowySvg;
+    } else if (preciptype.includes("rain") && precipprob >= 35) {
+        return rainSvg;
+    } else if (cloudcover > 10) {
+        return cloudySvg;
+    } else {
+        return sunnySvg;
+    }
 }
 
 function test(ihour, dataset, parameter) {
     return getDailyResult(ihour, dataset, parameter);
 }
 
-export { test };
+export { test, displayHourlyWeatherData, displayDailyWeatherData };

@@ -8,6 +8,7 @@ body {
     background-attachment: fixed;
     width: fit-content;
     min-width: 550px;
+    max-width: 80vh;
     margin: 0 auto;
     color: white;
 }
@@ -149,6 +150,7 @@ div.current {
 h2 {
     font-size: 3rem;
     font-weight: bold;
+    overflow: hidden;
 }
 
 div.conditions-container {
@@ -176,6 +178,12 @@ h1#temp {
 
 div.current > div > span:first-child {
     font-weight: 200;
+}
+
+h3 {
+    font-weight: bold;
+    margin: 2rem 0 1rem;
+    text-align: center;
 }
 /* #endregion Content */
 

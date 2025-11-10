@@ -3,20 +3,25 @@ div.carousel-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4rem;
+    gap: 1vh;
 }
 
 div.carousel-content {
-    --carousel-img-width: 80vh;
-    --carousel-img-gap: 10rem;
-    --carousel-img-ratio: calc(4 / 3);
-    --carousel-btn-width: calc(var(--carousel-img-width) / 10);
+    --carousel-img-width: 10vh;
+    --carousel-img-gap: 3rem;
+    --carousel-img-ratio: calc(1 / 1);
+    --carousel-btn-width: calc(var(--carousel-img-width) / 4);
     display: flex;
     align-items: center;
+    gap: 1em;
+    width: 80%;
 }
 
 div div.carousel {
-    width: var(--carousel-img-width);
+    width: calc(
+        (var(--carousel-img-width) + var(--carousel-img-gap)) * 5 -
+            var(--carousel-img-gap)
+    );
     display: inline-block;
     overflow: hidden;
 }
@@ -30,9 +35,21 @@ div.wide-container {
     transition: 0.5s;
 }
 
+div.hdata {
+    min-width: 10%;
+    justify-content: center;
+    overflow: visible;
+}
+
 img.carousel {
     width: var(--carousel-img-width);
-    min-width: 100%;
+}
+
+div.hdata p {
+    white-space: nowrap;
+    text-align: center;
+    margin-left: -100%;
+    margin-right: -100%;
 }
 
 img.carousel-btn {
@@ -53,12 +70,12 @@ img.carousel-btn {
 
 div.carousel-nav {
     display: flex;
-    gap: 5rem;
+    gap: 1vh;
 }
 
 span.nav-dot {
-    height: 4rem;
-    width: 4rem;
+    height: 1vh;
+    width: 1vh;
     background-color: #bebebec4;
     border-radius: 50%;
     display: inline-block;

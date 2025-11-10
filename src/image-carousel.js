@@ -25,7 +25,6 @@ function quickBuildImgCarousel(parent, imgSrcArr, leftArrowSrc, rightArrowSrc) {
     container.appendChild(navDiv);
 
     goToSlide(wideImgDiv, 0);
-    setInterval(() => nextSlide(wideImgDiv), 5000);
 }
 
 // Creates a div containing the images specified in the array
@@ -35,10 +34,13 @@ function createImgDiv(imgSrcArr) {
     imgDiv.classList.add("wide-container");
 
     for (let i = 0; i < imgSrcArr.length; i++) {
+        const div = document.createElement("div");
+        div.classList.add("hdata");
         const img = document.createElement("img");
         img.src = imgSrcArr[i];
         img.classList.add("carousel");
-        imgDiv.appendChild(img);
+        div.appendChild(img);
+        imgDiv.appendChild(div);
     }
 
     return imgDiv;
@@ -64,9 +66,8 @@ function createNavDots(target) {
         navDot.classList.add("nav-dot");
 
         navDot.addEventListener("click", (e) => {
-            const slideContainer = document.querySelector(".wide-container");
             const children = Array.from(e.target.parentNode.children);
-            goToSlide(slideContainer, children.indexOf(e.target));
+            goToSlide(target, children.indexOf(e.target));
         });
 
         navDiv.appendChild(navDot);
@@ -108,7 +109,8 @@ function goToSlide(target, i) {
     const offsetArr = getChildrenOffsetLeft(target);
     target.style.setProperty("right", offsetArr[i] + "px");
 
-    const navChildren = document.querySelectorAll(".nav-dot");
+    const carouselContainer = target.parentNode.parentNode.parentNode;
+    const navChildren = carouselContainer.querySelectorAll(".nav-dot");
 
     removeNavDotStyle(navChildren, navChildren[i]);
     navChildren[i].classList.add("selected"); // style active dot
